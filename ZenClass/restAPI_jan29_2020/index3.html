@@ -1,0 +1,55 @@
+<html>
+
+<body>
+
+<script>
+
+var myDiv=document.createElement('div');;
+let box=document.createElement('input');
+box.setAttribute('class','boxy');
+box.setAttribute('placeholder','search here');
+document.body.appendChild(box);
+box.addEventListener('keyup',()=>{
+
+let a=box.value;
+console.log(a);
+
+myDiv.innerHTML="";
+fetch('https://restcountries.eu/rest/v2/name/'+a)
+.then((response)=>{
+return response.json();
+})
+.then((data)=>{
+console.log(data);
+
+myDiv=document.createElement('div');
+myDiv.setAttribute('class','divi');
+
+for(let i=0;i<data.length;i++){
+let head1=document.createElement('h1');
+head1.setAttribute('class','hd1');
+head1.innerHTML=data[i].name;
+myDiv.appendChild(head1);
+
+let head2=document.createElement('h2');
+head2.setAttribute('class','hd2');
+head2.innerHTML=data[i].nativeName;
+myDiv.appendChild(head2);
+
+let pic=document.createElement('img');
+pic.setAttribute('class','pic1');
+pic.setAttribute('src',data[i].flag);
+myDiv.appendChild(pic);
+
+}
+
+document.body.appendChild(myDiv);
+
+})
+
+})
+</script>
+
+</body>
+
+</html>

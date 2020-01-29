@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<style>
+
+.displayBox{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-around;
+}
+
+.divi{
+	width: 18rem;
+}
+</style>
+<body>
+
+
+    <div class="container">
+	
+	<div class="row">
+	   <div class="col" align="center">
+		<h2>Rest Api</h2><br>
+	   </div>
+	</div>
+
+	<div class="row">
+        <div id="searchbox">
+
+        </div>
+		<div id="cardID" class="displayBox">
+
+            
+		</div>
+		
+	</div>
+
+</div>
+    <script>
+
+                //created div
+        let createDiv=document.createElement('div');;
+
+
+                    //created displaying card
+        const card=document.createElement('input');
+        card.setAttribute('class','cardy');
+        card.setAttribute('placeholder','search here');
+        document.body.appendChild(card);
+        card.addEventListener('keyup',()=>
+        {
+
+                                    //data fetchin
+                            const a=card.value;
+                            createDiv.innerHTML="";
+                            fetch('https://restcountries.eu/rest/v2/name/'+a)
+                            .then((response)=>{
+                            return response.json();
+                            }).then((data)=>
+        
+        
+        
+                                {
+                                        createDiv=document.createElement('div');
+                                        createDiv.setAttribute('class','card');
+
+                                        for(let i=0;i<data.length;i++){
+                                        let head1=document.createElement('h1');
+                                        head1.setAttribute('class','hd1');
+                                        head1.innerHTML=data[i].name;
+                                        createDiv.appendChild(head1);
+
+                                        let head2=document.createElement('h2');
+                                        head2.setAttribute('class','hd2');
+                                        head2.innerHTML=data[i].nativeName;
+                                        createDiv.appendChild(head2);
+
+                                        let pic=document.createElement('img');
+                                        pic.setAttribute('class','pic1');
+                                        pic.setAttribute('src',data[i].flag);
+                                        createDiv.appendChild(pic);
+                                        var div =document.getElementById("cardID");
+                                        div.appendChild(createDiv);
+
+                    }
+
+        //document.body.appendChild(createDiv);
+
+})
+
+})
+    
+    
+    </script>
+</body>
+</html>
