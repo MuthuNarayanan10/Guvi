@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+    
+    function dataTable(url,elmId){
+var arr;
+var disDiv = document.createElement("div");
+disDiv.setAttribute("class","table-responsive");
+
+var btnDiv = document.createElement("div");
+disDiv.appendChild(btnDiv);
+
+var mainDiv = document.createElement("div");
+mainDiv.appendChild(disDiv);
+mainDiv.appendChild(btnDiv);
+var div = document.getElementById(elmId);
+div.appendChild(mainDiv);
+
+	
+fetch(url).then((response) => { return response.json();}).then((data) =>{ 
+		
+	arr = data.slice(0,data.length);
+	createTable(data);
+	var page = data.length / 5;
+	for(i =1; i<=page; i++){
+		createButton(i.toString());
+	}
+
+		
+}).catch((err) => { console.log(err);});
+  
+function createButton(id){
+  
+    var btn = document.createElement("button");
+    btn.id = id;
+    btn.innerHTML = id;
+    btn.onclick = function(){ createTableClick(this,arr); };
+    //var div = document.getElementById("div1");
+    btnDiv.appendChild(btn);
+  
+}
+
+
+function createTable(data){
+	var table = document.createElement("table");
+	var thead = document.createElement("thead");
+	var tbody = document.createElement("tbody");
+	
+	var keys = Object.keys(data[0]);
+	var trHead = document.createElement("tr");
+
+	//table.style.border = "1px solid black";
+	table.style.borderCollapse = "collapse";
+
+	keys.forEach(function(elm){
+		
+		
+		var th = document.createElement("th");
+		th.innerHTML = elm;
+		//th.style.border = "1px solid black";
+		th.style.backgroundColor = "#ff5733";
+		th.style.padding="8px";
+		th.style.color ="white";
+		trHead.appendChild(th);
+
+ 	});
+
+	
+	var id = (isNaN(parseInt(this.id))) ? 1 : parseInt(this.id);
+	var rowEnd = id * 5;
+	var rowStart = rowEnd - 5;
+	
+
+	for(j= rowStart; j<rowEnd; j++){
+
+		var tr = document.createElement("tr");
+		for(i=0; i< Object.keys(data[0]).length; i++){
+			
+			var td = document.createElement("td");
+			td.innerHTML = data[j][keys[i]];
+			//td.style.border = "1px solid black";
+			td.style.padding ="8px";
+			tr.appendChild(td);
+		}
+		tbody.appendChild(tr);
+	}
+	table.appendChild(thead);
+	table.appendChild(tbody);
+	thead.appendChild(trHead);
+	disDiv.appendChild(table);
+	
+	
+	
+}
+
+function createTableClick(curr,data){
+	console.log(curr.parentElement.previousSibling.id);
+	var table = document.createElement("table");
+	var thead = document.createElement("thead");
+	var tbody = document.createElement("tbody");
+	
+	var keys = Object.keys(data[0]);
+	var trHead = document.createElement("tr");
+
+	//table.style.border = "1px solid black";
+	table.style.borderCollapse = "collapse";
+
+	keys.forEach(function(elm){
+		
+		
+		var th = document.createElement("th");
+		th.innerHTML = elm;
+		//th.style.border = "1px solid black";
+		th.style.backgroundColor = "#ff5733";
+		th.style.padding="8px";
+		th.style.color ="white";
+		trHead.appendChild(th);
+
+ 	});
+
+	
+	var id = (isNaN(parseInt(curr.id))) ? 1 : parseInt(curr.id);
+	var rowEnd = id * 5;
+	var rowStart = rowEnd - 5;
+	
+
+	for(j= rowStart; j<rowEnd; j++){
+
+		var tr = document.createElement("tr");
+		for(i=0; i< Object.keys(data[0]).length; i++){
+			
+			var td = document.createElement("td");
+			td.innerHTML = data[j][keys[i]];
+			//td.style.border = "1px solid black";
+			td.style.padding ="8px";
+			tr.appendChild(td);
+		}
+		tbody.appendChild(tr);
+	}
+	table.appendChild(thead);
+	table.appendChild(tbody);
+	thead.appendChild(trHead);
+	if(curr.parentElement.previousSibling.firstChild != null){
+		curr.parentElement.previousSibling.firstChild.remove();
+	}
+	
+	disDiv.appendChild(table);
+	
+}
+
+return "Success";
+
+}
+
+
+
+const promise1 = Promise.resolve(dataTable("https://5cdd0a92b22718001417c19d.mockapi.io/api/users","tb1"));
+
+const promise2 = Promise.resolve(dataTable("https://5cdd0a92b22718001417c19d.mockapi.io/api/books","tb2"));
+
+const promise3 = Promise.resolve(dataTable("https://5cdd0a92b22718001417c19d.mockapi.io/api/doctors","tb3"));
+
+const promise4 = Promise.resolve(dataTable("https://5cdd0a92b22718001417c19d.mockapi.io/api/products","tb4"));
+
+Promise.all([promise1, promise2, promise3, promise4]).then((msg) => {
+
+	console.log(msg);
+
+});
+
+</script>
+
+    
+    </script>
+</body>
+</html>
