@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        form{
+            
+            margin-left: 45%;
+           
+        }
+        body {
+ background-image: url("30100.jpg");
+        }
+        button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+button:hover span {
+  padding-right: 25px;
+}
+
+button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+       
+    </style>
+</head>
+<body>
+
+        <center><h1>PRODUCT FORM</h1></center>
+   <script>
+
+
+
+                // detail list of json
+    var detailJson={};
+
+
+    var variant1={};
+    var variant2={};
+    var variant3={};
+
+
+
+
+    var variant_details=[];
+    var size_values=[];
+    var mat_values=[];
+    var col_values=[];
+
+
+
+
+    function formCovert(){
+     var proName=a.innerHTML;
+     var proNameVal=document.getElementById('pro_name').value;
+     detailJson[proName]=proNameVal;
+     var BasePrice=b.innerHTML;
+     detailJson[BasePrice]=document.getElementById('base_price').value;
+    var Des=c.innerHTML;
+     detailJson[Des]=document.getElementById('desc').value;
+    console.log(detailJson);
+    var val=document.getElementById('sz').value;
+    size_values.push(val.split(','));
+    variant1.type='Size';
+    variant1.Values=size_values;
+
+        
+    var val1=document.getElementById('mat').value;
+    mat_values.push(val1.split(','));
+    variant2.type='Material';
+    variant2.Values=mat_values;
+    var val2=document.getElementById('col').value;
+    col_values.push(val2.split(','));
+    variant3.type='Color';
+    variant3.Values=col_values;
+    var Variants=[variant1,variant2,variant3];
+    detailJson.Variants=Variants;
+    console.log(Variants);
+    return detailJson;
+}
+    
+   
+
+    var proForm=document.createElement('form');
+    var a=document.createElement('p');
+//     var head1=document.createElement('h2');
+//     h2.innerHTML="PRODUCT FORM";
+//     proForm.appendChild(head1);
+// //    document.body.appendChild(head1);
+    a.innerHTML="Product Name:";
+    proForm.appendChild(a);
+    var productName=document.createElement('input');
+    productName.id="pro_name";
+    proForm.appendChild(productName);
+    var b=document.createElement('p');
+    b.innerHTML="Base Price:"
+    proForm.appendChild(b);
+    var basePrice=document.createElement('input');
+    basePrice.id="base_price";
+    proForm.appendChild(basePrice);
+    
+    var c=document.createElement('p');
+    c.innerHTML="Description:";
+    proForm.appendChild(c);
+    var description=document.createElement('input');
+    description.id="desc";
+    proForm.appendChild(description);
+    
+    var proForm1=document.createElement('form');
+    var a1=document.createElement('p');
+    a1.innerHTML="Variants:";
+    proForm1.appendChild(a1);
+    var b1=document.createElement('p');
+    b1.innerHTML="Size:";
+    proForm1.appendChild(b1);
+    var size=document.createElement('input');
+    size.id="sz";
+    proForm1.appendChild(size);
+    
+    var c1=document.createElement('p');
+    c1.innerHTML="Material:";
+    proForm1.appendChild(c1);
+    var material=document.createElement('input');
+    material.id="mat";
+    proForm1.appendChild(material);
+       
+    var d1=document.createElement('p');
+    d1.innerHTML="Color:";
+    proForm1.appendChild(d1);
+    var color=document.createElement('input');
+    color.id="col";
+    proForm1.appendChild(color);
+
+    var brk=document.createElement('br');
+    proForm.appendChild(brk);
+    
+    var button=document.createElement('button');
+    button.innerHTML="Submit";
+    button.setAttribute('onclick','formCovert();return false');
+    proForm1.appendChild(button);
+    
+    
+    document.body.appendChild(proForm);
+    document.body.appendChild(proForm1);
+    
+   
+
+     
+
+    
+    
+    
+    
+    </script>
+    
+</body>
+</html>
